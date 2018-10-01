@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"github.com/gorilla/mux"
 	"github.com/wilsonfv/todolist/app/controller"
 	"github.com/wilsonfv/todolist/app/dao"
@@ -71,10 +72,16 @@ func replyWithJson(w http.ResponseWriter, code int, payload interface{}) {
 }
 
 func init() {
-	td.Server = "localhost:27017"
+	var mongodbUrl string
+
+	flag.StringVar(&mongodbUrl, "mongodbUrl", "localhost:27017", "url to connect to mongodb")
+	flag.Parse()
+
+	td.Server = mongodbUrl
 	td.Database = "task_db"
 	td.Collection = "tasks"
 
+	log.Print("connecting to mongodb at ", mongodbUrl)
 	td.Connect()
 }
 

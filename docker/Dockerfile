@@ -8,6 +8,4 @@ COPY Gopkg.toml Gopkg.lock ./
 RUN go get -u github.com/golang/dep/cmd/dep
 RUN dep ensure
 
-EXPOSE 8181/tcp
-
-CMD ["go run app/app_server.go"]
+CMD ["go", "run", "-v app/app_server.go"]
