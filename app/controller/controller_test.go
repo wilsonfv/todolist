@@ -83,6 +83,4 @@ func TestDeleteTask(t *testing.T) {
 	if len(taskListNew) != 2 {
 		t.Fail()
 	}
-
-	t.Fail()
 }
