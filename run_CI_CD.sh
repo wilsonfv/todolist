@@ -30,7 +30,8 @@ docker container ls --filter "name=mongodb"
 
 echo `date -u +"%Y-%m-%d %H:%M:%S"` "check repository changes"
 while true; do
-    if [ $(git remote -v update | grep "up to date" | wc -l) -eq 0 ]; then
+    git fetch
+    if [ $(git rev-parse HEAD) != $(git rev-parse @{u}) ]; then
         git reset --hard
         git pull
 
