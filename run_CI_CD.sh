@@ -51,7 +51,7 @@ while true; do
         # Run the unit test
         docker container stop app-test
         docker container rm -vf app-test
-        docker run --name app-test todolist:${IMAGE_TAG} -i go test ./... > ${LOG}/app-test-${IMAGE_TAG}.log
+        docker run --name app-test -i todolist:${IMAGE_TAG} go test ./... > ${LOG}/app-test-${IMAGE_TAG}.log
         docker container stop app-test
         docker container rm -vf app-test
 
