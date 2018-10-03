@@ -78,3 +78,9 @@ curl -X DELETE \
     }'
 }'
 ```
+
+# Server Side
+You can run the batch script on server side to perform CICD on every git changes
+```
+nohup ./run_CI_CD.sh >> ../log/run.log &
+```
