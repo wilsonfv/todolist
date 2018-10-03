@@ -49,7 +49,7 @@ while true; do
             docker container stop app-server
             docker container rm -vfl app-server
             docker tag todolist:${IMAGE_TAG} todolist:latest
-            docker run --name app-server --network app-net --publish 8181:8181 -it todolist:latest go run -v app/app_server.go -mongodbUrl mongodb:27017 > ${LOG}/app-server.${IMAGE_TAG}.log
+            docker run --name app-server --network app-net --publish 8181:8181 -itd todolist:latest go run -v app/app_server.go -mongodbUrl mongodb:27017 > ${LOG}/app-server.${IMAGE_TAG}.log
         else
             docker image rm -f todolist:${IMAGE_TAG}
         fi
