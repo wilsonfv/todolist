@@ -92,7 +92,7 @@ func main() {
 	router.HandleFunc("/task", AddTask).Methods("POST")
 	router.HandleFunc("/task", DeleteTask).Methods("DELETE")
 
-	log.Println("Server starting at localhost:8181/task")
+	log.Println("App Server starting at localhost:8181/task")
 	if err := http.ListenAndServe(":8181", router); err != nil {
 		log.Fatal(err)
 	}
