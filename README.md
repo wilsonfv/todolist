@@ -50,7 +50,7 @@ Startup go web server container. The mongodb url will be passed into the server.
 docker run --name app-server --network app-net --publish 8181:8181 -d todolist:latest go run -v app/app_server.go -mongodbUrl mongodb:27017
 ```
 
-#Restful API
+# Restful API
 To get all the tasks
 ```
 curl -X GET http://localhost:8181/task
