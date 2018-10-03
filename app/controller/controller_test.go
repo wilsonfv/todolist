@@ -16,22 +16,22 @@ func createMockDao() dao.MockTaskDao {
 	creationDate3, _ := bson.NewMongoTimestamp(time.Now(), 3)
 
 	var task1 = model.Task{
-		ID: bson.NewObjectId(),
-		Name: "task1",
-		CreationDate:creationDate1,
-		Description:"task description 1"}
+		ID:           bson.NewObjectId(),
+		Name:         "task1",
+		CreationDate: creationDate1,
+		Description:  "task description 1"}
 
 	var task2 = model.Task{
-		ID: bson.NewObjectId(),
-		Name: "task2",
-		CreationDate:creationDate2,
-		Description:"task description 2"}
+		ID:           bson.NewObjectId(),
+		Name:         "task2",
+		CreationDate: creationDate2,
+		Description:  "task description 2"}
 
 	var task3 = model.Task{
-		ID: bson.NewObjectId(),
-		Name: "task3",
-		CreationDate:creationDate3,
-		Description:"task description 3"}
+		ID:           bson.NewObjectId(),
+		Name:         "task3",
+		CreationDate: creationDate3,
+		Description:  "task description 3"}
 
 	dao.Collection = append(dao.Collection, task1)
 	dao.Collection = append(dao.Collection, task2)
@@ -39,7 +39,6 @@ func createMockDao() dao.MockTaskDao {
 
 	return dao
 }
-
 
 func TestListAll(t *testing.T) {
 	var dao = createMockDao()
@@ -56,10 +55,10 @@ func TestAddTask(t *testing.T) {
 
 	creationDate4, _ := bson.NewMongoTimestamp(time.Now(), 4)
 	var task4 = model.Task{
-		ID: bson.NewObjectId(),
-		Name: "task4",
-		CreationDate:creationDate4,
-		Description:"task description 4"}
+		ID:           bson.NewObjectId(),
+		Name:         "task4",
+		CreationDate: creationDate4,
+		Description:  "task description 4"}
 
 	AddTask(&dao, task4)
 
@@ -84,4 +83,6 @@ func TestDeleteTask(t *testing.T) {
 	if len(taskListNew) != 2 {
 		t.Fail()
 	}
+
+	t.Fail()
 }
