@@ -48,20 +48,21 @@ while true; do
         IMAGE_TAG=`date -u +"%Y%m%d%H%M%S"`
         docker build -t todolist:${IMAGE_TAG} --rm --no-cache -f docker/Dockerfile .
 
-        # Run the unit test
+        echo `date -u +"%Y-%m-%d %H:%M:%S"` "Run the unit test"
         docker container stop app-test
         docker container rm -vf app-test
         docker run --name app-test -i todolist:${IMAGE_TAG} go test ./... > ${LOG}/app-test-${IMAGE_TAG}.log
         docker container stop app-test
         docker container rm -vf app-test
 
-        # If tests are OK then start the new version container
         if [ $(cat ${LOG}/app-test-${IMAGE_TAG}.log | grep -i "FAIL" | wc -l) -eq 0 ]; then
+            echo `date -u +"%Y-%m-%d %H:%M:%S"` "all tests passed, start a new version container with image tag ${IMAGE_TAG}"
             docker container stop app-server
             docker container rm -vf app-server
             docker tag todolist:${IMAGE_TAG} todolist:latest
             docker run --name app-server --network app-net --publish 8181:8181 -d todolist:latest go run -v app/app_server.go -mongodbUrl mongodb:27017
         else
+            echo `date -u +"%Y-%m-%d %H:%M:%S"` "tests failed, ignore new changes"
             docker image rm -f todolist:${IMAGE_TAG}
         fi
     else
