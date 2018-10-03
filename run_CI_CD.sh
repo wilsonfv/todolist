@@ -65,7 +65,7 @@ while true; do
             docker image rm -f todolist:${IMAGE_TAG}
         fi
     else
-        echo `date -u +"%Y-%m-%d %H:%M:%S"` "no changes on repository, sleep a while"
+        echo `date -u +"%Y-%m-%d %H:%M:%S"` "no changes on repository, sleep a while (60 sec)"
         sleep 60
     fi
 done
