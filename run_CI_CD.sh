@@ -40,10 +40,10 @@ while true; do
 
         # Run the unit test
         docker container stop app-test
-        docker container rm -vfl app-test
+        docker container rm -vf app-test
         docker run --name app-test -it todolist:${IMAGE_TAG} go test ./... > ${LOG}/app-test-${IMAGE_TAG}.log
         docker container stop app-test
-        docker container rm -vfl app-test
+        docker container rm -vf app-test
 
         # If tests are OK then start the new version container
         if [ $(cat ${LOG}/app-test-${IMAGE_TAG}.log | grep -i "FAIL" | wc -l) -eq 0 ]; then
