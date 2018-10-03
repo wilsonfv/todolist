@@ -14,6 +14,8 @@ import (
 var td = dao.TaskDao{}
 
 func ListTask(w http.ResponseWriter, r *http.Request) {
+	log.Println("ListTask")
+
 	tasks, err := controller.ListAll(&td)
 
 	if err != nil {
