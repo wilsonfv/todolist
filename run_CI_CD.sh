@@ -28,10 +28,20 @@ fi
 docker container ls --filter "name=mongodb"
 
 
+if [ $(docker container ls --filter "name=app-server" | wc -l) -eq 1 ]; then
+    echo `date -u +"%Y-%m-%d %H:%M:%S"` "start container app-server"
+    docker container stop app-server
+    docker container rm -vf app-server
+    docker run --name app-server --network app-net --publish 8181:8181 -itd todolist:latest go run -v app/app_server.go -mongodbUrl mongodb:27017
+fi
+docker container ls --filter "name=app-server"
+
+
 echo `date -u +"%Y-%m-%d %H:%M:%S"` "check repository changes"
 while true; do
     git fetch
     if [ $(git rev-parse HEAD) != $(git rev-parse @{u}) ]; then
+        echo `date -u +"%Y-%m-%d %H:%M:%S"` "changes detected"
         git reset --hard
         git pull
 
@@ -48,9 +58,9 @@ while true; do
         # If tests are OK then start the new version container
         if [ $(cat ${LOG}/app-test-${IMAGE_TAG}.log | grep -i "FAIL" | wc -l) -eq 0 ]; then
             docker container stop app-server
-            docker container rm -vfl app-server
+            docker container rm -vf app-server
             docker tag todolist:${IMAGE_TAG} todolist:latest
-            docker run --name app-server --network app-net --publish 8181:8181 -itd todolist:latest go run -v app/app_server.go -mongodbUrl mongodb:27017 > ${LOG}/app-server.${IMAGE_TAG}.log
+            docker run --name app-server --network app-net --publish 8181:8181 -itd todolist:latest go run -v app/app_server.go -mongodbUrl mongodb:27017
         else
             docker image rm -f todolist:${IMAGE_TAG}
         fi
