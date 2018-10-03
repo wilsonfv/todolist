@@ -27,6 +27,8 @@ func ListTask(w http.ResponseWriter, r *http.Request) {
 }
 
 func AddTask(w http.ResponseWriter, r *http.Request) {
+	log.Println("AddTask")
+
 	defer r.Body.Close()
 
 	var task model.Task
